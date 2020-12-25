@@ -57,6 +57,13 @@ This corresponds to the refresh rate of the scrolling animation."
   :group 'good-scroll
   :type 'float)
 
+(defcustom good-scroll-algorithm #'good-scroll-bezier-position
+  "TODO"
+  :group 'good-scroll
+  :type 'function
+  :options '(good-scroll-bezier-position
+             good-scroll-linear-position))
+
 (defvar good-scroll--window nil
   "The window scrolled most recently.")
 
@@ -134,15 +141,12 @@ progress. This is called by the timer `good-scroll--timer' every
   (when (eq (selected-window) good-scroll--window)
     (let* (
            (elapsed-time (- (float-time) good-scroll--start-time))
-           (fraction-done (/ elapsed-time good-scroll-duration))
-           (position-next (round (- (* fraction-done
-                                       (+ good-scroll--traveled
-                                          good-scroll--destination))
-                                    good-scroll--traveled))))
+           (fraction-done (/ elapsed-time good-scroll-duration)))
       (unless (>= fraction-done 1.0)
-        (setq good-scroll--traveled (+ good-scroll--traveled position-next)
-              good-scroll--destination (- good-scroll--destination position-next))
-        (good-scroll--go-to position-next)))))
+        (let ((position-next (funcall good-scroll-algorithm fraction-done)))
+          (good-scroll--go-to position-next)
+          (setq good-scroll--traveled (+ good-scroll--traveled position-next)
+                good-scroll--destination (- good-scroll--destination position-next)))))))
 
 (defun good-scroll--go-to (pos)
   "Jump the window by POS pixel lines.

@@ -2,20 +2,20 @@
 
 (defvar bezier--epsilon 0.01)
 
-(defun bezier-calc (t p1 p2)
-  (+ (* 3 (expt (- 1 t) 2) t p1)
-     (* 3 (- 1 t) (expt t 2) p2)
-     (expt t 3)))
+(defun bezier-calc (tt p1 p2)
+  (+ (* 3 (expt (- 1 tt) 2) tt p1)
+     (* 3 (- 1 tt) (expt tt 2) p2)
+     (expt tt 3)))
 
-(defun bezier-deriv (t p1 p2)
-  (+ (* 3 (exp (- 1 t) 2) p1)
-     (* 6 (- 1 t) t (- p2 p1))
-     (* 3 (exp t 2) (- 1 p2))))
+(defun bezier-deriv (tt p1 p2)
+  (+ (* 3 (expt (- 1 tt) 2) p1)
+     (* 6 (- 1 tt) tt (- p2 p1))
+     (* 3 (expt tt 2) (- 1 p2))))
 
 (defun bezier--approx-eq (a b)
   (< (abs (- a b))) bezier--epsilon)
 
-(defun bezier-t-given-x (x x1 x2 &optional t-min &optional t-max)
+(defun bezier-t-given-x (x x1 x2 &optional t-min t-max)
   (let* (
          (t-min (or t-min 0.0))
          (t-max (or t-max 1.0))
@@ -28,3 +28,7 @@
       (bezier-t-given-x x x1 x2 t-mid t-max))
      (t
       (bezier-t-given-x x x1 x2 t-min t-mid)))))
+
+(provide 'bezier)
+
+;;; bezier.el ends here
