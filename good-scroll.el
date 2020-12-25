@@ -144,6 +144,8 @@ progress. This is called by the timer `good-scroll--timer' every
            (fraction-done (/ elapsed-time good-scroll-duration)))
       (unless (>= fraction-done 1.0)
         (let ((position-next (funcall good-scroll-algorithm fraction-done)))
+          (assert (<= (abs position-next)
+                      (abs good-scroll--destination)))
           (good-scroll--go-to position-next)
           (setq good-scroll--traveled (+ good-scroll--traveled position-next)
                 good-scroll--destination (- good-scroll--destination position-next)))))))

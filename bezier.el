@@ -13,7 +13,8 @@
      (* 3 (expt tt 2) (- 1 p2))))
 
 (defun bezier--approx-eq (a b)
-  (< (abs (- a b))) bezier--epsilon)
+  (< (abs (- a b))
+     bezier--epsilon))
 
 (defun bezier-t-given-x (x x1 x2 &optional t-min t-max)
   (let* (

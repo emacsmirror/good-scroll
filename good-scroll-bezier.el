@@ -43,8 +43,9 @@
          (progress (bezier-calc tt
                                 good-scroll-bezier--y1
                                 good-scroll-bezier--y2)))
-    (* progress (+ good-scroll--traveled
-                   good-scroll--destination))))
+    (round (- (* progress (+ good-scroll--traveled
+                             good-scroll--destination))
+              good-scroll--traveled))))
 
 (defun good-scroll-bezier--update (fraction-done)
   (let ((velocity (if good-scroll-bezier--x1
