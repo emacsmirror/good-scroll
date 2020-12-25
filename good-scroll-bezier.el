@@ -5,6 +5,8 @@
 (defvar good-scroll-bezier--x2 nil)
 (defvar good-scroll-bezier--y2 nil)
 
+(defvar good-scroll-bezier--prev-time nil)
+
 (defun good-scroll-bezier--set-pivots (velocity position)
   (let* (
          (slope (/ (* velocity good-scroll-duration)
@@ -29,7 +31,8 @@
                             good-scroll-bezier--y1
                             good-scroll-bezier--y2))
          (slope (/ dxy dt))) ; TODO make sure dt != 0
-    (/ (* slope good-scroll--destination)
+    (/ (* slope (+ good-scroll--traveled
+                   good-scroll--destination))
        good-scroll-duration)))
 
 (defun good-scroll-bezier--position (fraction-done)
@@ -40,8 +43,8 @@
          (progress (bezier-calc tt
                                 good-scroll-bezier--y1
                                 good-scroll-bezier--y2)))
-    (+ (* (- 1.0 progress) (- good-scroll--traveled))
-       (* progress good-scroll--destination))))
+    (* progress (+ good-scroll--traveled
+                   good-scroll--destination))))
 
 (defun good-scroll-bezier--update (fraction-done)
   (let ((velocity (if good-scroll-bezier--x1
@@ -50,7 +53,9 @@
     (good-scroll-bezier--set-pivots velocity 0.0)))
 
 (defun good-scroll-bezier-position (fraction-done)
-  (good-scroll-bezier--update fraction-done)
+  (unless (equal good-scroll-bezier--prev-time good-scroll--start-time)
+    (good-scroll-bezier--update fraction-done)
+    (setq good-scroll-bezier--prev-time good-scroll--start-time))
   (good-scroll-bezier--position fraction-done))
 
 (provide 'good-scroll-bezier)
