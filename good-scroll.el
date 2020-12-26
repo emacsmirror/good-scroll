@@ -63,9 +63,9 @@ This corresponds to the refresh rate of the scrolling animation."
 (defcustom good-scroll-algorithm #'good-scroll-bezier-position
   "TODO"
   :group 'good-scroll
-  :type 'function
-  :options '(good-scroll-bezier-position
-             good-scroll-linear-position))
+  :type '(radio (function-item good-scroll-bezier-position)
+                (function-item good-scroll-linear-position)
+                function))
 
 (defvar good-scroll--window nil
   "The window scrolled most recently.")
