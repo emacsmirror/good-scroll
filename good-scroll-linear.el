@@ -7,4 +7,5 @@
             good-scroll--traveled)))
 
 (provide 'good-scroll-linear)
+
 ;;; good-scroll-linear.el ends here

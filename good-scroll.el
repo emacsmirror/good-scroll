@@ -32,6 +32,9 @@
 
 ;;; Code:
 
+(require 'good-scroll-bezier)
+(require 'good-scroll-linear)
+
 (defgroup good-scroll nil
   "Good scrolling"
   :group 'scrolling)
