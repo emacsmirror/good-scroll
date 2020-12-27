@@ -73,7 +73,7 @@
 
 (defvar good-scroll-bezier--prev-time nil)
 
-(defun good-scroll-bezier--set-pivots (velocity position)
+(defun good-scroll-bezier--set-pivots (velocity)
   (let* (
          (slope (/ (* velocity good-scroll-duration)
                    good-scroll-destination))
@@ -117,7 +117,7 @@
   (let ((velocity (if good-scroll-bezier--x1
                       (good-scroll-bezier--velocity-at fraction-done)
                     0.0)))
-    (good-scroll-bezier--set-pivots velocity 0.0)))
+    (good-scroll-bezier--set-pivots velocity)))
 
 (defun good-scroll-bezier (fraction-done)
   (unless (equal good-scroll-bezier--prev-time
