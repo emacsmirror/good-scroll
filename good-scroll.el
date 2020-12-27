@@ -61,7 +61,12 @@ This corresponds to the refresh rate of the scrolling animation."
   :type 'float)
 
 (defcustom good-scroll-algorithm #'good-scroll-bezier
-  "TODO"
+  "The scrolling animation algorithm to use.
+If implementing your own algorithm, it should be a function with one argument,
+a float from 0.0 to 1.0 representing the progress of the scroll.
+The function should return a target position in pixel-lines relative to the top
+of the window.
+See the built-in algorithms for inspiration."
   :group 'good-scroll
   :type '(radio (function-item good-scroll-bezier)
                 (function-item good-scroll-linear)
