@@ -60,11 +60,11 @@ This corresponds to the refresh rate of the scrolling animation."
   :group 'good-scroll
   :type 'float)
 
-(defcustom good-scroll-algorithm #'good-scroll-bezier-position
+(defcustom good-scroll-algorithm #'good-scroll-bezier
   "TODO"
   :group 'good-scroll
-  :type '(radio (function-item good-scroll-bezier-position)
-                (function-item good-scroll-linear-position)
+  :type '(radio (function-item good-scroll-bezier)
+                (function-item good-scroll-linear)
                 function))
 
 (defvar good-scroll--window nil
@@ -131,7 +131,7 @@ A negative DIRECTION means to scroll down. This is a helper function for
              (if (> (* direction good-scroll--direction) 0)
                  good-scroll-destination
                0))
-          good-scroll--start-time (float-time)
+          good-scroll-start-time (float-time)
           good-scroll-traveled 0
           good-scroll--direction direction
           good-scroll--window (selected-window))))
@@ -143,7 +143,7 @@ progress. This is called by the timer `good-scroll--timer' every
 `good-scroll-render-rate' seconds."
   (when (eq (selected-window) good-scroll--window)
     (let* (
-           (elapsed-time (- (float-time) good-scroll--start-time))
+           (elapsed-time (- (float-time) good-scroll-start-time))
            (fraction-done (/ elapsed-time good-scroll-duration)))
       (unless (>= fraction-done 1.0)
         (let ((position-next (funcall good-scroll-algorithm fraction-done)))
