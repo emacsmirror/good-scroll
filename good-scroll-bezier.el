@@ -1,4 +1,4 @@
-;;; good-scroll-bezier.el --- Good scroll Bézier algorithm -*- lexical-binding: t; -*-
+;;; good-scroll-bezier.el --- Bézier scrolling algorithm -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020 Benjamin Levy - MIT/X11 License
 ;; Author: Benjamin Levy <blevy@protonmail.com>
@@ -23,7 +23,10 @@
 
 ;;; Commentary:
 
-;; This implements a scrolling algorithm for `good-scroll' based on Bézier curves.
+;; This implements a scrolling algorithm for `good-scroll'
+;; based on Bézier curves.
+;; This is newer and feels smoother than `good-scroll-linear',
+;; but is more complicated.
 ;; Set `good-scroll-algorithm' to `good-scroll-bezier-position' to enable.
 
 ;;; Code:
