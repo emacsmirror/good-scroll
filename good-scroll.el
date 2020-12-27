@@ -50,7 +50,7 @@ This corresponds to the refresh rate of the scrolling animation."
   :group 'good-scroll
   :type 'float)
 
-(defcustom good-scroll-step 40
+(defcustom good-scroll-step 80
   "Number of pixel lines to scroll during a scroll step."
   :group 'good-scroll
   :type 'integer)
