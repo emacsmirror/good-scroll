@@ -73,7 +73,7 @@
 (defun good-scroll-bezier--set-pivots (velocity position)
   (let* (
          (slope (/ (* velocity good-scroll-duration)
-                   good-scroll--destination))
+                   good-scroll-destination))
          (normalization (sqrt (+ 1.0 (expt slope 2))))
          (dt (* (/ 1.0 normalization) 0.25))
          (dxy (* (/ slope normalization) 0.25)))
@@ -94,8 +94,8 @@
                                          good-scroll-bezier--y1
                                          good-scroll-bezier--y2))
          (slope (/ dxy dt))) ; TODO make sure dt != 0
-    (/ (* slope (+ good-scroll--traveled
-                   good-scroll--destination))
+    (/ (* slope (+ good-scroll-traveled
+                   good-scroll-destination))
        good-scroll-duration)))
 
 (defun good-scroll-bezier--position (fraction-done)
@@ -106,9 +106,9 @@
          (progress (good-scroll-bezier--calc tt
                                              good-scroll-bezier--y1
                                              good-scroll-bezier--y2)))
-    (round (- (* progress (+ good-scroll--traveled
-                             good-scroll--destination))
-              good-scroll--traveled))))
+    (round (- (* progress (+ good-scroll-traveled
+                             good-scroll-destination))
+              good-scroll-traveled))))
 
 (defun good-scroll-bezier--update (fraction-done)
   (let ((velocity (if good-scroll-bezier--x1
@@ -116,10 +116,12 @@
                     0.0)))
     (good-scroll-bezier--set-pivots velocity 0.0)))
 
-(defun good-scroll-bezier-position (fraction-done)
-  (unless (equal good-scroll-bezier--prev-time good-scroll--start-time)
+(defun good-scroll-bezier (fraction-done)
+  (unless (equal good-scroll-bezier--prev-time
+                 good-scroll-start-time)
     (good-scroll-bezier--update fraction-done)
-    (setq good-scroll-bezier--prev-time good-scroll--start-time))
+    (setq good-scroll-bezier--prev-time
+          good-scroll-start-time))
   (good-scroll-bezier--position fraction-done))
 
 

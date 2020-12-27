@@ -73,15 +73,15 @@ This corresponds to the refresh rate of the scrolling animation."
 (defvar good-scroll--timer nil
   "Timer for render updates.")
 
-(defvar good-scroll--destination nil
+(defvar good-scroll-destination nil
   "Destination of the current scroll.
 The unit is pixel lines relative to the top of the window.
 For example, -12 means scrolling down 12 pixels.")
 
-(defvar good-scroll--traveled nil
+(defvar good-scroll-traveled nil
   "Number of pixel lines traveled so far in the current scroll.")
 
-(defvar good-scroll--start-time nil
+(defvar good-scroll-start-time nil
   "Start time of the most recent scroll.")
 
 (defvar good-scroll--direction 0
@@ -125,14 +125,14 @@ The value of DELTA is ignored and exists only for compatibility with
 A negative DIRECTION means to scroll down. This is a helper function for
 `good-scroll-up' and `good-scroll-down'."
   (unless (input-pending-p)
-    (setq good-scroll--destination
+    (setq good-scroll-destination
           (+ (* direction good-scroll-step)
              ;; Reset destination if scroll changed direction
              (if (> (* direction good-scroll--direction) 0)
-                 good-scroll--destination
+                 good-scroll-destination
                0))
           good-scroll--start-time (float-time)
-          good-scroll--traveled 0
+          good-scroll-traveled 0
           good-scroll--direction direction
           good-scroll--window (selected-window))))
 
@@ -148,10 +148,10 @@ progress. This is called by the timer `good-scroll--timer' every
       (unless (>= fraction-done 1.0)
         (let ((position-next (funcall good-scroll-algorithm fraction-done)))
           (assert (<= (abs position-next)
-                      (abs good-scroll--destination)))
+                      (abs good-scroll-destination)))
           (good-scroll--go-to position-next)
-          (setq good-scroll--traveled (+ good-scroll--traveled position-next)
-                good-scroll--destination (- good-scroll--destination
+          (setq good-scroll-traveled (+ good-scroll-traveled position-next)
+                good-scroll-destination (- good-scroll-destination
                                             position-next)))))))
 
 (defun good-scroll--go-to (pos)
