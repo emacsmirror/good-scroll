@@ -151,7 +151,8 @@ progress. This is called by the timer `good-scroll--timer' every
                       (abs good-scroll--destination)))
           (good-scroll--go-to position-next)
           (setq good-scroll--traveled (+ good-scroll--traveled position-next)
-                good-scroll--destination (- good-scroll--destination position-next)))))))
+                good-scroll--destination (- good-scroll--destination
+                                            position-next)))))))
 
 (defun good-scroll--go-to (pos)
   "Jump the window by POS pixel lines.
